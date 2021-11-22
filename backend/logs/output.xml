@@ -1,0 +1,411 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<robot generator="Robot 4.1.2 (Python 3.9.7 on darwin)" generated="20211121 18:59:55.376" rpa="false" schemaversion="2">
+<suite id="s1" name="LoginTests" source="/Users/elieteaparecidamiranda/Documents/projects/rocklov/backend/tests/LoginTests.robot">
+<test id="s1-t1" name="User Login">
+<kw name="Create Dictionary" library="BuiltIn">
+<var>&amp;{payload}</var>
+<arg>email=eliete@eliete.com</arg>
+<arg>password=123456</arg>
+<doc>Creates and returns a dictionary based on the given ``items``.</doc>
+<msg timestamp="20211121 18:59:55.464" level="INFO">&amp;{payload} = { email=eliete@eliete.com | password=123456 }</msg>
+<status status="PASS" starttime="20211121 18:59:55.464" endtime="20211121 18:59:55.464"/>
+</kw>
+<kw name="POST Login" library="Sessions">
+<var>${response}</var>
+<arg>${payload}</arg>
+<kw name="POST" library="RequestsLibrary">
+<var>${response}</var>
+<arg>${base_url}/sessions</arg>
+<arg>json=${payload}</arg>
+<arg>expected_status=any</arg>
+<doc>Sends a POST request.</doc>
+<msg timestamp="20211121 18:59:56.880" level="INFO">POST Request : url=https://rocklov-eli-api.herokuapp.com/sessions 
+ path_url=/sessions 
+ headers={'User-Agent': 'python-requests/2.26.0', 'Accept-Encoding': 'gzip, deflate', 'Accept': '*/*', 'Connection': 'keep-alive', 'Content-Length': '52', 'Content-Type': 'application/json'} 
+ body=b'{"email": "eliete@eliete.com", "password": "123456"}' 
+ </msg>
+<msg timestamp="20211121 18:59:56.880" level="INFO">POST Response : url=https://rocklov-eli-api.herokuapp.com/sessions 
+ status=200, reason=OK 
+ headers={'Server': 'Cowboy', 'Connection': 'keep-alive', 'X-Powered-By': 'Express', 'Access-Control-Allow-Origin': '*', 'Content-Type': 'application/json; charset=utf-8', 'Content-Length': '41', 'Etag': 'W/"29-DlTks0qxn4iiaPR+U0aHYjG9Irk"', 'Date': 'Sun, 21 Nov 2021 21:59:57 GMT', 'Via': '1.1 vegur'} 
+ body={"user_token":"6199b2898b3f370016de0455"} 
+ </msg>
+<msg timestamp="20211121 18:59:56.881" level="INFO">${response} = &lt;Response [200]&gt;</msg>
+<status status="PASS" starttime="20211121 18:59:55.465" endtime="20211121 18:59:56.881"/>
+</kw>
+<msg timestamp="20211121 18:59:56.881" level="INFO">${response} = &lt;Response [200]&gt;</msg>
+<status status="PASS" starttime="20211121 18:59:55.464" endtime="20211121 18:59:56.881"/>
+</kw>
+<kw name="Status Should Be" library="RequestsLibrary">
+<arg>200</arg>
+<arg>${response}</arg>
+<doc>Fails if response status code is different than the expected.</doc>
+<status status="PASS" starttime="20211121 18:59:56.882" endtime="20211121 18:59:56.883"/>
+</kw>
+<kw name="Set Variable" library="BuiltIn">
+<var>${token}</var>
+<arg>${response.json()}[user_token]</arg>
+<doc>Returns the given values which can then be assigned to a variables.</doc>
+<msg timestamp="20211121 18:59:56.884" level="INFO">${token} = 6199b2898b3f370016de0455</msg>
+<status status="PASS" starttime="20211121 18:59:56.883" endtime="20211121 18:59:56.884"/>
+</kw>
+<kw name="Length Should Be" library="BuiltIn">
+<arg>${token}</arg>
+<arg>24</arg>
+<doc>Verifies that the length of the given item is correct.</doc>
+<msg timestamp="20211121 18:59:56.885" level="INFO">Length is 24</msg>
+<status status="PASS" starttime="20211121 18:59:56.885" endtime="20211121 18:59:56.885"/>
+</kw>
+<tag>CT1</tag>
+<status status="PASS" starttime="20211121 18:59:55.463" endtime="20211121 18:59:56.886"/>
+</test>
+<test id="s1-t2" name="Incorrect password">
+<kw name="Create Dictionary" library="BuiltIn">
+<var>&amp;{payload}</var>
+<arg>email=eliete@eliete.com</arg>
+<arg>password=ABC123</arg>
+<doc>Creates and returns a dictionary based on the given ``items``.</doc>
+<msg timestamp="20211121 18:59:56.888" level="INFO">&amp;{payload} = { email=eliete@eliete.com | password=ABC123 }</msg>
+<status status="PASS" starttime="20211121 18:59:56.887" endtime="20211121 18:59:56.888"/>
+</kw>
+<kw name="POST Login" library="Sessions">
+<var>${response}</var>
+<arg>${payload}</arg>
+<kw name="POST" library="RequestsLibrary">
+<var>${response}</var>
+<arg>${base_url}/sessions</arg>
+<arg>json=${payload}</arg>
+<arg>expected_status=any</arg>
+<doc>Sends a POST request.</doc>
+<msg timestamp="20211121 18:59:57.706" level="INFO">POST Request : url=https://rocklov-eli-api.herokuapp.com/sessions 
+ path_url=/sessions 
+ headers={'User-Agent': 'python-requests/2.26.0', 'Accept-Encoding': 'gzip, deflate', 'Accept': '*/*', 'Connection': 'keep-alive', 'Content-Length': '52', 'Content-Type': 'application/json'} 
+ body=b'{"email": "eliete@eliete.com", "password": "ABC123"}' 
+ </msg>
+<msg timestamp="20211121 18:59:57.706" level="INFO">POST Response : url=https://rocklov-eli-api.herokuapp.com/sessions 
+ status=401, reason=Unauthorized 
+ headers={'Server': 'Cowboy', 'Connection': 'keep-alive', 'X-Powered-By': 'Express', 'Access-Control-Allow-Origin': '*', 'Content-Type': 'application/json; charset=utf-8', 'Content-Length': '24', 'Etag': 'W/"18-XPDV80vbMk4yY1/PADG4jYM4rSI"', 'Date': 'Sun, 21 Nov 2021 21:59:58 GMT', 'Via': '1.1 vegur'} 
+ body={"error":"Unauthorized"} 
+ </msg>
+<msg timestamp="20211121 18:59:57.707" level="INFO">${response} = &lt;Response [401]&gt;</msg>
+<status status="PASS" starttime="20211121 18:59:56.888" endtime="20211121 18:59:57.707"/>
+</kw>
+<msg timestamp="20211121 18:59:57.707" level="INFO">${response} = &lt;Response [401]&gt;</msg>
+<status status="PASS" starttime="20211121 18:59:56.888" endtime="20211121 18:59:57.708"/>
+</kw>
+<kw name="Status Should Be" library="RequestsLibrary">
+<arg>401</arg>
+<arg>${response}</arg>
+<doc>Fails if response status code is different than the expected.</doc>
+<status status="PASS" starttime="20211121 18:59:57.708" endtime="20211121 18:59:57.709"/>
+</kw>
+<kw name="Should Be Equal" library="BuiltIn">
+<arg>Unauthorized</arg>
+<arg>${response.json()}[error]</arg>
+<doc>Fails if the given objects are unequal.</doc>
+<status status="PASS" starttime="20211121 18:59:57.709" endtime="20211121 18:59:57.711"/>
+</kw>
+<status status="PASS" starttime="20211121 18:59:56.886" endtime="20211121 18:59:57.711"/>
+</test>
+<test id="s1-t3" name="User Not Found">
+<kw name="Create Dictionary" library="BuiltIn">
+<var>&amp;{payload}</var>
+<arg>email=eliete@gmail.com</arg>
+<arg>password=abc123</arg>
+<doc>Creates and returns a dictionary based on the given ``items``.</doc>
+<msg timestamp="20211121 18:59:57.713" level="INFO">&amp;{payload} = { email=eliete@gmail.com | password=abc123 }</msg>
+<status status="PASS" starttime="20211121 18:59:57.712" endtime="20211121 18:59:57.713"/>
+</kw>
+<kw name="POST Login" library="Sessions">
+<var>${response}</var>
+<arg>${payload}</arg>
+<kw name="POST" library="RequestsLibrary">
+<var>${response}</var>
+<arg>${base_url}/sessions</arg>
+<arg>json=${payload}</arg>
+<arg>expected_status=any</arg>
+<doc>Sends a POST request.</doc>
+<msg timestamp="20211121 18:59:58.525" level="INFO">POST Request : url=https://rocklov-eli-api.herokuapp.com/sessions 
+ path_url=/sessions 
+ headers={'User-Agent': 'python-requests/2.26.0', 'Accept-Encoding': 'gzip, deflate', 'Accept': '*/*', 'Connection': 'keep-alive', 'Content-Length': '51', 'Content-Type': 'application/json'} 
+ body=b'{"email": "eliete@gmail.com", "password": "abc123"}' 
+ </msg>
+<msg timestamp="20211121 18:59:58.525" level="INFO">POST Response : url=https://rocklov-eli-api.herokuapp.com/sessions 
+ status=401, reason=Unauthorized 
+ headers={'Server': 'Cowboy', 'Connection': 'keep-alive', 'X-Powered-By': 'Express', 'Access-Control-Allow-Origin': '*', 'Content-Type': 'application/json; charset=utf-8', 'Content-Length': '24', 'Etag': 'W/"18-XPDV80vbMk4yY1/PADG4jYM4rSI"', 'Date': 'Sun, 21 Nov 2021 21:59:59 GMT', 'Via': '1.1 vegur'} 
+ body={"error":"Unauthorized"} 
+ </msg>
+<msg timestamp="20211121 18:59:58.525" level="INFO">${response} = &lt;Response [401]&gt;</msg>
+<status status="PASS" starttime="20211121 18:59:57.714" endtime="20211121 18:59:58.526"/>
+</kw>
+<msg timestamp="20211121 18:59:58.526" level="INFO">${response} = &lt;Response [401]&gt;</msg>
+<status status="PASS" starttime="20211121 18:59:57.713" endtime="20211121 18:59:58.526"/>
+</kw>
+<kw name="Status Should Be" library="RequestsLibrary">
+<arg>401</arg>
+<arg>${response}</arg>
+<doc>Fails if response status code is different than the expected.</doc>
+<status status="PASS" starttime="20211121 18:59:58.527" endtime="20211121 18:59:58.527"/>
+</kw>
+<kw name="Should Be Equal" library="BuiltIn">
+<arg>Unauthorized</arg>
+<arg>${response.json()}[error]</arg>
+<doc>Fails if the given objects are unequal.</doc>
+<status status="PASS" starttime="20211121 18:59:58.528" endtime="20211121 18:59:58.529"/>
+</kw>
+<status status="PASS" starttime="20211121 18:59:57.712" endtime="20211121 18:59:58.530"/>
+</test>
+<test id="s1-t4" name="Wrong Email">
+<kw name="Create Dictionary" library="BuiltIn">
+<var>&amp;{payload}</var>
+<arg>email=eliete&amp;gmail.com</arg>
+<arg>password=abc123</arg>
+<doc>Creates and returns a dictionary based on the given ``items``.</doc>
+<msg timestamp="20211121 18:59:58.531" level="INFO">&amp;{payload} = { email=eliete&amp;gmail.com | password=abc123 }</msg>
+<status status="PASS" starttime="20211121 18:59:58.531" endtime="20211121 18:59:58.531"/>
+</kw>
+<kw name="POST Login" library="Sessions">
+<var>${response}</var>
+<arg>${payload}</arg>
+<kw name="POST" library="RequestsLibrary">
+<var>${response}</var>
+<arg>${base_url}/sessions</arg>
+<arg>json=${payload}</arg>
+<arg>expected_status=any</arg>
+<doc>Sends a POST request.</doc>
+<msg timestamp="20211121 18:59:59.187" level="INFO">POST Request : url=https://rocklov-eli-api.herokuapp.com/sessions 
+ path_url=/sessions 
+ headers={'User-Agent': 'python-requests/2.26.0', 'Accept-Encoding': 'gzip, deflate', 'Accept': '*/*', 'Connection': 'keep-alive', 'Content-Length': '51', 'Content-Type': 'application/json'} 
+ body=b'{"email": "eliete&amp;gmail.com", "password": "abc123"}' 
+ </msg>
+<msg timestamp="20211121 18:59:59.187" level="INFO">POST Response : url=https://rocklov-eli-api.herokuapp.com/sessions 
+ status=412, reason=Precondition Failed 
+ headers={'Server': 'Cowboy', 'Connection': 'keep-alive', 'X-Powered-By': 'Express', 'Access-Control-Allow-Origin': '*', 'Content-Type': 'application/json; charset=utf-8', 'Content-Length': '23', 'Etag': 'W/"17-J+BxLoUN8ST7m7fP0enwagCQK4E"', 'Date': 'Sun, 21 Nov 2021 21:59:59 GMT', 'Via': '1.1 vegur'} 
+ body={"error":"wrong email"} 
+ </msg>
+<msg timestamp="20211121 18:59:59.188" level="INFO">${response} = &lt;Response [412]&gt;</msg>
+<status status="PASS" starttime="20211121 18:59:58.532" endtime="20211121 18:59:59.188"/>
+</kw>
+<msg timestamp="20211121 18:59:59.188" level="INFO">${response} = &lt;Response [412]&gt;</msg>
+<status status="PASS" starttime="20211121 18:59:58.532" endtime="20211121 18:59:59.188"/>
+</kw>
+<kw name="Status Should Be" library="RequestsLibrary">
+<arg>412</arg>
+<arg>${response}</arg>
+<doc>Fails if response status code is different than the expected.</doc>
+<status status="PASS" starttime="20211121 18:59:59.189" endtime="20211121 18:59:59.190"/>
+</kw>
+<kw name="Should Be Equal" library="BuiltIn">
+<arg>wrong email</arg>
+<arg>${response.json()}[error]</arg>
+<doc>Fails if the given objects are unequal.</doc>
+<status status="PASS" starttime="20211121 18:59:59.191" endtime="20211121 18:59:59.192"/>
+</kw>
+<status status="PASS" starttime="20211121 18:59:58.530" endtime="20211121 18:59:59.193"/>
+</test>
+<test id="s1-t5" name="EMPTY Email">
+<kw name="Create Dictionary" library="BuiltIn">
+<var>&amp;{payload}</var>
+<arg>email=${EMPTY}</arg>
+<arg>password=abc123</arg>
+<doc>Creates and returns a dictionary based on the given ``items``.</doc>
+<msg timestamp="20211121 18:59:59.195" level="INFO">&amp;{payload} = { email= | password=abc123 }</msg>
+<status status="PASS" starttime="20211121 18:59:59.194" endtime="20211121 18:59:59.195"/>
+</kw>
+<kw name="POST Login" library="Sessions">
+<var>${response}</var>
+<arg>${payload}</arg>
+<kw name="POST" library="RequestsLibrary">
+<var>${response}</var>
+<arg>${base_url}/sessions</arg>
+<arg>json=${payload}</arg>
+<arg>expected_status=any</arg>
+<doc>Sends a POST request.</doc>
+<msg timestamp="20211121 18:59:59.850" level="INFO">POST Request : url=https://rocklov-eli-api.herokuapp.com/sessions 
+ path_url=/sessions 
+ headers={'User-Agent': 'python-requests/2.26.0', 'Accept-Encoding': 'gzip, deflate', 'Accept': '*/*', 'Connection': 'keep-alive', 'Content-Length': '35', 'Content-Type': 'application/json'} 
+ body=b'{"email": "", "password": "abc123"}' 
+ </msg>
+<msg timestamp="20211121 18:59:59.850" level="INFO">POST Response : url=https://rocklov-eli-api.herokuapp.com/sessions 
+ status=412, reason=Precondition Failed 
+ headers={'Server': 'Cowboy', 'Connection': 'keep-alive', 'X-Powered-By': 'Express', 'Access-Control-Allow-Origin': '*', 'Content-Type': 'application/json; charset=utf-8', 'Content-Length': '26', 'Etag': 'W/"1a-8KRaSvY57iDhlue9EjFWx2TpquE"', 'Date': 'Sun, 21 Nov 2021 22:00:00 GMT', 'Via': '1.1 vegur'} 
+ body={"error":"required email"} 
+ </msg>
+<msg timestamp="20211121 18:59:59.850" level="INFO">${response} = &lt;Response [412]&gt;</msg>
+<status status="PASS" starttime="20211121 18:59:59.196" endtime="20211121 18:59:59.851"/>
+</kw>
+<msg timestamp="20211121 18:59:59.851" level="INFO">${response} = &lt;Response [412]&gt;</msg>
+<status status="PASS" starttime="20211121 18:59:59.196" endtime="20211121 18:59:59.851"/>
+</kw>
+<kw name="Status Should Be" library="RequestsLibrary">
+<arg>412</arg>
+<arg>${response}</arg>
+<doc>Fails if response status code is different than the expected.</doc>
+<status status="PASS" starttime="20211121 18:59:59.852" endtime="20211121 18:59:59.852"/>
+</kw>
+<kw name="Should Be Equal" library="BuiltIn">
+<arg>required email</arg>
+<arg>${response.json()}[error]</arg>
+<doc>Fails if the given objects are unequal.</doc>
+<status status="PASS" starttime="20211121 18:59:59.853" endtime="20211121 18:59:59.854"/>
+</kw>
+<status status="PASS" starttime="20211121 18:59:59.193" endtime="20211121 18:59:59.854"/>
+</test>
+<test id="s1-t6" name="EMPTY Password">
+<kw name="Create Dictionary" library="BuiltIn">
+<var>&amp;{payload}</var>
+<arg>email=eliete@eliete.com</arg>
+<arg>password=${EMPTY}</arg>
+<doc>Creates and returns a dictionary based on the given ``items``.</doc>
+<msg timestamp="20211121 18:59:59.858" level="INFO">&amp;{payload} = { email=eliete@eliete.com | password= }</msg>
+<status status="PASS" starttime="20211121 18:59:59.856" endtime="20211121 18:59:59.858"/>
+</kw>
+<kw name="POST Login" library="Sessions">
+<var>${response}</var>
+<arg>${payload}</arg>
+<kw name="POST" library="RequestsLibrary">
+<var>${response}</var>
+<arg>${base_url}/sessions</arg>
+<arg>json=${payload}</arg>
+<arg>expected_status=any</arg>
+<doc>Sends a POST request.</doc>
+<msg timestamp="20211121 19:00:00.563" level="INFO">POST Request : url=https://rocklov-eli-api.herokuapp.com/sessions 
+ path_url=/sessions 
+ headers={'User-Agent': 'python-requests/2.26.0', 'Accept-Encoding': 'gzip, deflate', 'Accept': '*/*', 'Connection': 'keep-alive', 'Content-Length': '46', 'Content-Type': 'application/json'} 
+ body=b'{"email": "eliete@eliete.com", "password": ""}' 
+ </msg>
+<msg timestamp="20211121 19:00:00.563" level="INFO">POST Response : url=https://rocklov-eli-api.herokuapp.com/sessions 
+ status=412, reason=Precondition Failed 
+ headers={'Server': 'Cowboy', 'Connection': 'keep-alive', 'X-Powered-By': 'Express', 'Access-Control-Allow-Origin': '*', 'Content-Type': 'application/json; charset=utf-8', 'Content-Length': '29', 'Etag': 'W/"1d-tUn0yUHtqO1XqLN8GlARJKKNdM8"', 'Date': 'Sun, 21 Nov 2021 22:00:01 GMT', 'Via': '1.1 vegur'} 
+ body={"error":"required password"} 
+ </msg>
+<msg timestamp="20211121 19:00:00.563" level="INFO">${response} = &lt;Response [412]&gt;</msg>
+<status status="PASS" starttime="20211121 18:59:59.859" endtime="20211121 19:00:00.563"/>
+</kw>
+<msg timestamp="20211121 19:00:00.564" level="INFO">${response} = &lt;Response [412]&gt;</msg>
+<status status="PASS" starttime="20211121 18:59:59.858" endtime="20211121 19:00:00.564"/>
+</kw>
+<kw name="Status Should Be" library="RequestsLibrary">
+<arg>412</arg>
+<arg>${response}</arg>
+<doc>Fails if response status code is different than the expected.</doc>
+<status status="PASS" starttime="20211121 19:00:00.564" endtime="20211121 19:00:00.565"/>
+</kw>
+<kw name="Should Be Equal" library="BuiltIn">
+<arg>required password</arg>
+<arg>${response.json()}[error]</arg>
+<doc>Fails if the given objects are unequal.</doc>
+<status status="PASS" starttime="20211121 19:00:00.565" endtime="20211121 19:00:00.566"/>
+</kw>
+<status status="PASS" starttime="20211121 18:59:59.855" endtime="20211121 19:00:00.567"/>
+</test>
+<test id="s1-t7" name="Without Email">
+<kw name="Create Dictionary" library="BuiltIn">
+<var>&amp;{payload}</var>
+<arg>password=abc123</arg>
+<doc>Creates and returns a dictionary based on the given ``items``.</doc>
+<msg timestamp="20211121 19:00:00.569" level="INFO">&amp;{payload} = { password=abc123 }</msg>
+<status status="PASS" starttime="20211121 19:00:00.568" endtime="20211121 19:00:00.569"/>
+</kw>
+<kw name="POST Login" library="Sessions">
+<var>${response}</var>
+<arg>${payload}</arg>
+<kw name="POST" library="RequestsLibrary">
+<var>${response}</var>
+<arg>${base_url}/sessions</arg>
+<arg>json=${payload}</arg>
+<arg>expected_status=any</arg>
+<doc>Sends a POST request.</doc>
+<msg timestamp="20211121 19:00:01.215" level="INFO">POST Request : url=https://rocklov-eli-api.herokuapp.com/sessions 
+ path_url=/sessions 
+ headers={'User-Agent': 'python-requests/2.26.0', 'Accept-Encoding': 'gzip, deflate', 'Accept': '*/*', 'Connection': 'keep-alive', 'Content-Length': '22', 'Content-Type': 'application/json'} 
+ body=b'{"password": "abc123"}' 
+ </msg>
+<msg timestamp="20211121 19:00:01.216" level="INFO">POST Response : url=https://rocklov-eli-api.herokuapp.com/sessions 
+ status=412, reason=Precondition Failed 
+ headers={'Server': 'Cowboy', 'Connection': 'keep-alive', 'X-Powered-By': 'Express', 'Access-Control-Allow-Origin': '*', 'Content-Type': 'application/json; charset=utf-8', 'Content-Length': '26', 'Etag': 'W/"1a-8KRaSvY57iDhlue9EjFWx2TpquE"', 'Date': 'Sun, 21 Nov 2021 22:00:01 GMT', 'Via': '1.1 vegur'} 
+ body={"error":"required email"} 
+ </msg>
+<msg timestamp="20211121 19:00:01.216" level="INFO">${response} = &lt;Response [412]&gt;</msg>
+<status status="PASS" starttime="20211121 19:00:00.569" endtime="20211121 19:00:01.216"/>
+</kw>
+<msg timestamp="20211121 19:00:01.217" level="INFO">${response} = &lt;Response [412]&gt;</msg>
+<status status="PASS" starttime="20211121 19:00:00.569" endtime="20211121 19:00:01.217"/>
+</kw>
+<kw name="Status Should Be" library="RequestsLibrary">
+<arg>412</arg>
+<arg>${response}</arg>
+<doc>Fails if response status code is different than the expected.</doc>
+<status status="PASS" starttime="20211121 19:00:01.217" endtime="20211121 19:00:01.218"/>
+</kw>
+<kw name="Should Be Equal" library="BuiltIn">
+<arg>required email</arg>
+<arg>${response.json()}[error]</arg>
+<doc>Fails if the given objects are unequal.</doc>
+<status status="PASS" starttime="20211121 19:00:01.218" endtime="20211121 19:00:01.219"/>
+</kw>
+<status status="PASS" starttime="20211121 19:00:00.567" endtime="20211121 19:00:01.220"/>
+</test>
+<test id="s1-t8" name="Without Password">
+<kw name="Create Dictionary" library="BuiltIn">
+<var>&amp;{payload}</var>
+<arg>email=eliete@eliete.com</arg>
+<doc>Creates and returns a dictionary based on the given ``items``.</doc>
+<msg timestamp="20211121 19:00:01.222" level="INFO">&amp;{payload} = { email=eliete@eliete.com }</msg>
+<status status="PASS" starttime="20211121 19:00:01.221" endtime="20211121 19:00:01.222"/>
+</kw>
+<kw name="POST Login" library="Sessions">
+<var>${response}</var>
+<arg>${payload}</arg>
+<kw name="POST" library="RequestsLibrary">
+<var>${response}</var>
+<arg>${base_url}/sessions</arg>
+<arg>json=${payload}</arg>
+<arg>expected_status=any</arg>
+<doc>Sends a POST request.</doc>
+<msg timestamp="20211121 19:00:01.891" level="INFO">POST Request : url=https://rocklov-eli-api.herokuapp.com/sessions 
+ path_url=/sessions 
+ headers={'User-Agent': 'python-requests/2.26.0', 'Accept-Encoding': 'gzip, deflate', 'Accept': '*/*', 'Connection': 'keep-alive', 'Content-Length': '30', 'Content-Type': 'application/json'} 
+ body=b'{"email": "eliete@eliete.com"}' 
+ </msg>
+<msg timestamp="20211121 19:00:01.892" level="INFO">POST Response : url=https://rocklov-eli-api.herokuapp.com/sessions 
+ status=412, reason=Precondition Failed 
+ headers={'Server': 'Cowboy', 'Connection': 'keep-alive', 'X-Powered-By': 'Express', 'Access-Control-Allow-Origin': '*', 'Content-Type': 'application/json; charset=utf-8', 'Content-Length': '29', 'Etag': 'W/"1d-tUn0yUHtqO1XqLN8GlARJKKNdM8"', 'Date': 'Sun, 21 Nov 2021 22:00:02 GMT', 'Via': '1.1 vegur'} 
+ body={"error":"required password"} 
+ </msg>
+<msg timestamp="20211121 19:00:01.892" level="INFO">${response} = &lt;Response [412]&gt;</msg>
+<status status="PASS" starttime="20211121 19:00:01.223" endtime="20211121 19:00:01.892"/>
+</kw>
+<msg timestamp="20211121 19:00:01.893" level="INFO">${response} = &lt;Response [412]&gt;</msg>
+<status status="PASS" starttime="20211121 19:00:01.223" endtime="20211121 19:00:01.893"/>
+</kw>
+<kw name="Status Should Be" library="RequestsLibrary">
+<arg>412</arg>
+<arg>${response}</arg>
+<doc>Fails if response status code is different than the expected.</doc>
+<status status="PASS" starttime="20211121 19:00:01.893" endtime="20211121 19:00:01.894"/>
+</kw>
+<kw name="Should Be Equal" library="BuiltIn">
+<arg>required password</arg>
+<arg>${response.json()}[error]</arg>
+<doc>Fails if the given objects are unequal.</doc>
+<status status="PASS" starttime="20211121 19:00:01.894" endtime="20211121 19:00:01.896"/>
+</kw>
+<status status="PASS" starttime="20211121 19:00:01.220" endtime="20211121 19:00:01.896"/>
+</test>
+<doc>Sessions route tests</doc>
+<status status="PASS" starttime="20211121 18:59:55.378" endtime="20211121 19:00:01.898"/>
+</suite>
+<statistics>
+<total>
+<stat pass="8" fail="0" skip="0">All Tests</stat>
+</total>
+<tag>
+<stat pass="1" fail="0" skip="0">CT1</stat>
+</tag>
+<suite>
+<stat pass="8" fail="0" skip="0" id="s1" name="LoginTests">LoginTests</stat>
+</suite>
+</statistics>
+<errors>
+</errors>
+</robot>
