@@ -1,3 +1,1 @@
-# project-rocklov-eli
--> API REST Rocklov Eli
--> WEB Rocklov Eli
+Teste de automação de API Rest usando Robot Framework
